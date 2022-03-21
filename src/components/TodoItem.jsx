@@ -1,40 +1,21 @@
 import * as React from 'react';
-import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
 import ListItemButton from '@mui/material/ListItemButton';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
 import Checkbox from '@mui/material/Checkbox';
 import IconButton from '@mui/material/IconButton';
-import CommentIcon from '@mui/icons-material/Comment';
+import DeleteIcon from '@mui/icons-material/Delete';
+import Paper from '@mui/material/Paper';
 
-export default function TodoItem() {
-  const [checked, setChecked] = React.useState([0]);
-
-  const handleToggle = (value) => () => {
-    const currentIndex = checked.indexOf(value);
-    const newChecked = [...checked];
-
-    if (currentIndex === -1) {
-      newChecked.push(value);
-    } else {
-      newChecked.splice(currentIndex, 1);
-    }
-
-    setChecked(newChecked);
-  };
-
-  return (
-    <List sx={{ width: '100%', bgcolor: 'background.paper' }}>
-      {[0].map((value) => {
-        const labelId = `checkbox-list-label-${value}`;
+export default function TodoItem({ todo, deleteTodo }) {
 
         return (
+          <Paper style={{ padding: "1em 0em" }}>
           <ListItem
-            key={value}
             secondaryAction={
-              <IconButton edge="end" aria-label="comments">
-                <CommentIcon />
+              <IconButton edge="end" aria-label="comments" onClick={() => deleteTodo(todo.id)}>
+                <DeleteIcon />
               </IconButton>
             }
             disablePadding
@@ -43,11 +24,9 @@ export default function TodoItem() {
               <ListItemIcon>
                 <Checkbox edge="start" tabIndex={-1} disableRipple />
               </ListItemIcon>
-              <ListItemText primary={`Line Item`} />
+              <ListItemText primary={todo.text} />
             </ListItemButton>
           </ListItem>
+          </Paper>
         );
-      })}
-    </List>
-  );
 }
